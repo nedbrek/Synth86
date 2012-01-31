@@ -1,0 +1,87 @@
+Altera DE0
+	$120
+	Cyclone III 3C16
+		15,408 LEs
+		56 M9K RAM (448KB - 9 bit bytes)
+		4 PLLs
+		346 user I/O
+	8MB SDRAM
+	4MB Flash NOR
+	SD card socket
+	USB
+	10 green LEDs
+	4 seven-segment displays
+	VGA (1280x1024 60Hz)
+	RS-232
+	PS/2
+	2 forty pin headers (72 pins + 8 power/ground, IDE cable)
+
+Altera DE2-70
+	$525
+	Cyclone II 2C70
+		70k LEs
+	USB
+	2MB SRAM
+	8MB Flash
+	SD card socket
+	18 red LEDs
+	9 green LEDs
+	audio in/out/mic
+	VGA
+	2 TV decoder
+	10/100 ethernet
+	USB host
+	RS-232
+	PS/2
+	IrDA
+	SMA
+	2 forty pin headers
+
+Xilinx ML401
+	$495
+	XC4VLX25-FF668-10C
+	64MB DDR SDRAM
+	9Mb SRAM
+	8MB Flash
+	2 PS/2
+	audio in/out/mic/head
+	RS-232
+	USB
+	USB host
+	VGA
+	10/100/1000 ethernet
+	sixty-four pin header
+
+Atlys Spartan-6
+	$349
+	LX45
+	128MB DDR2 SDRAM
+	10/100/1000 ethernet
+	2 HDMI in, 2 out
+	USB2
+	audio in/out/mic/head
+	16MB flash
+	forty-eight pin header
+
+Spartan-3A Starter Kit
+	$189
+	XC3S700A-FG484
+	4Mb flash
+	32MB DDR2 SDRAM
+	32Mb flash
+	2 16Mb flash
+	four channel D/A
+	two channel A/D
+	amp
+	10/100 ethernet
+	USB
+	2 RS-232
+	PS/2
+	VGA (4096 colors)
+	FX2 100 pin header
+	2 six pin headers
+	twenty pin header
+	audio out
+	8 LEDs
+	LCD
+

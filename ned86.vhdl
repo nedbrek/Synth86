@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity ned86 is
 port (
@@ -41,7 +42,17 @@ component icache is
 generic (dataWidth : integer := 8);
 port (
 	vip   : in  std_logic_vector(63 downto 0);
-	ibyte : out std_logic_vector(dataWidth-1 downto 0)
+	ibyte : out unsigned(dataWidth-1 downto 0)
+);
+end component;
+
+component decode is
+port (
+   ibytes : in unsigned(127 downto 0); -- 16B from icache
+   bytesValid : in std_logic_vector(15 downto 0); -- 1 bit per byte
+   uop : out std_logic_vector(18 downto 0);
+   jmp : out std_logic;
+   imm : out std_logic_vector(63 downto 0)
 );
 end component;
 
@@ -68,19 +79,25 @@ signal sftOut: std_logic_vector (63 downto 0);
 signal flags : std_logic_vector (5 downto 0);
 signal aFlags: std_logic_vector (5 downto 0);
 signal sFlags: std_logic_vector (5 downto 0);
-signal instByte : std_logic_vector(7 downto 0);
+signal instBytes : unsigned(127 downto 0);
 signal we : std_logic;
 signal aIdx : std_logic_vector(3 downto 0);
 signal bIdx : std_logic_vector(3 downto 0);
 signal dIdx : std_logic_vector(3 downto 0);
 signal op   : std_logic_vector(2 downto 0);
 signal opSel: std_logic;
+signal uop  : std_logic_vector(18 downto 0);
+signal decJmp : std_logic;
+signal decImm : std_logic_vector(63 downto 0);
 
 begin
 	alu1 : alu64 port map(clk, sz, a, b, cin, op, aluOut, aFlags);
 	sft1 : sft64 port map(clk, sz, a, b, cin, op, sftOut, sFlags);
-	ic : icache port map(b, instByte);
+	ic : icache
+	   generic map (dataWidth => 128)
+	   port map(b, instBytes);
 	rf : rfile16r2w1 port map(clk, aIdx, bIdx, dIdx, sz, we, dIn, a, b);
+	dec : decode port map(instBytes, x"ffff", uop, decJmp, decImm);
 
 	-- uop decoding
 	opSel<= dUop(18);
@@ -95,7 +112,7 @@ begin
 
 	dbg <= c;
 	dFl <= flags;
-	dIt <= instByte;
+	dIt <= std_logic_vector(instBytes(7 downto 0));
 
 	process (opSel, aluOut, sftOut)
 	begin

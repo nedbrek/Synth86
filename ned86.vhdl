@@ -114,7 +114,7 @@ begin
 	dFl <= flags;
 	dIt <= std_logic_vector(instBytes(7 downto 0));
 
-	process (opSel, aluOut, sftOut)
+	process (opSel, aluOut, sftOut, aFlags, sFlags)
 	begin
 		if (opSel = '1') then
 			c <= aluOut;

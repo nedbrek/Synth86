@@ -67,7 +67,7 @@ begin
 			flags(1) <= '1'; -- PF
 			flags(2) <= '1'; -- AF
 
-			if (zeroBuf = "0") then
+			if (zeroBuf = x"0000000000000000") then
 				flags(3) <= '1'; -- ZF
 			else
 				flags(3) <= '0';

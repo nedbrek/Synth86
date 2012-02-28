@@ -16,7 +16,7 @@ end;
 architecture synth of sftAry is
 	signal tmp : std_logic_vector(65 downto 0);
 begin
-	process (a, cin, mux)
+	process (a, cin, mux, tmp)
 	begin
 		tmp(65 downto 0) <= a & cin;
 
@@ -114,7 +114,7 @@ begin
 			flags(1) <= '1'; -- PF
 			flags(2) <= '1'; -- AF
 
-			if (zeroBuf = "0") then
+			if (zeroBuf = x"0000000000000000") then
 				flags(3) <= '1'; -- ZF
 			else
 				flags(3) <= '0';

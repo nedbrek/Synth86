@@ -77,7 +77,7 @@ begin
 			case sz is
 				when "00" => -- byte
 					msb   <= tmp(8);
-					mp1sb <= tmp(7);
+					mp1sb <= tmp(9);
 
 					zeroBuf(63 downto 8) <= (others => '0');
 					zeroBuf(7 downto 0) <= tmp(8 downto 1);

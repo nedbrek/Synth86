@@ -11,7 +11,7 @@ begin
 		if (clk'event and clk = '1') then
 			a <= rfile(to_integer(unsigned(aIdx)));
 			b <= rfile(to_integer(unsigned(bIdx)));
-			
+
 			if (we = '1') then
 				rfile(to_integer(unsigned(dIdx))) := data;
 			end if;

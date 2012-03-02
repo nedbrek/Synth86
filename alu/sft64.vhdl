@@ -56,7 +56,7 @@ architecture synth of sft64 is
 
 begin
 	sIn <= '0' & a;
-	
+
 	sft_layer1 : sftAry generic map (amt => 1)
 		port map(sIn, cin, b(0), sO1);
 	sft_layer2 : sftAry generic map (amt => 2)

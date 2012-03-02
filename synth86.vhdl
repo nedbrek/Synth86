@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ned86 is
+entity synth86 is
 port (
 	clk : in  std_logic;
 	dUop: in  std_logic_vector(18 downto 0);
@@ -13,7 +13,7 @@ port (
 );
 end;
 
-architecture synth of ned86 is
+architecture synth of synth86 is
 component alu64
 port (
 	clk   : in  std_logic;

@@ -30,6 +30,14 @@ begin
 end;
 
 architecture synth of sft64 is
+	component flagGen
+	port (
+		sz    : in  std_logic_vector (1 downto 0);
+		c     : in  std_logic_vector (64 downto 0);
+		flags : out std_logic_vector (5 downto 0)
+	);
+	end component;
+
 	component sftAry
 		generic (amt : integer := 1);
 		port (
@@ -55,8 +63,8 @@ architecture synth of sft64 is
 	signal zeroBuf : std_logic_vector(63 downto 0);
 
 begin
-	sIn <= '0' & a;
-
+	fg : flagGen port map(sz, tmp(65 downto 1), flags);
+	
 	sft_layer1 : sftAry generic map (amt => 1)
 		port map(sIn, cin, b(0), sO1);
 	sft_layer2 : sftAry generic map (amt => 2)
@@ -73,55 +81,11 @@ begin
 	process (clk)
 	begin
 		if (clk'event and clk = '1') then
-
-			case sz is
-				when "00" => -- byte
-					msb   <= tmp(8);
-					mp1sb <= tmp(9);
-
-					zeroBuf(63 downto 8) <= (others => '0');
-					zeroBuf(7 downto 0) <= tmp(8 downto 1);
-
-				when "01" => -- word
-					msb   <= tmp(16);
-					mp1sb <= tmp(17);
-
-					zeroBuf(63 downto 16) <= (others => '0');
-					zeroBuf(15 downto 0) <= tmp(16 downto 1);
-
-				when "10" => -- dword
-					msb   <= tmp(32);
-					mp1sb <= tmp(33);
-
-					zeroBuf(63 downto 32) <= (others => '0');
-					zeroBuf(31 downto 0) <= tmp(32 downto 1);
-
-				when "11" => -- qword
-					msb   <= tmp(64);
-					mp1sb <= tmp(65);
-
-					zeroBuf(63 downto 0) <= tmp(64 downto 1);
-
-				when others =>
-					msb <= '0';
-					mp1sb <= '0';
-					zeroBuf <= (others => '0');
-			end case;
+		
+			sIn <= '0' & a;
 
 			c <= tmp(64 downto 1);
 
-			flags(0) <= mp1sb; -- CF
-			flags(1) <= '1'; -- PF
-			flags(2) <= '1'; -- AF
-
-			if (zeroBuf = x"0000000000000000") then
-				flags(3) <= '1'; -- ZF
-			else
-				flags(3) <= '0';
-			end if;
-
-			flags(4) <= msb; -- SF
-			flags(5) <= '0'; -- OF (SF^CF?)
 		end if;
 	end process;
 
